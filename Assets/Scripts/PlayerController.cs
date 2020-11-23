@@ -12,25 +12,47 @@ public enum PlayerMovementState
 
 public class PlayerController : MonoBehaviour
 {
+    [Header("Player Prefab Elements")]
     public CharacterController m_CharacterController;
     public Camera m_Camera;
 
+    [Header("Ground Check for Physics")]
     public Transform m_GroundCheck;
     public float m_GroundDist = 0.4f;
+
+    [Tooltip("When creating a level, any floor that you want to be considered for gravity must have the provided Layer Mask applied to it")]
     public LayerMask m_GroundMask;
 
+    [Header("Movement Settings")]
+    [Range(0.1f, 100.0f)]
     public float m_WalkSpeed = 4.0f;
-    public float m_SprintSpeed = 8.0f;
-    public float m_CrouchModifier = 0.5f;
-    public float m_JumpSpeed = 3.5f;
-    public float m_Gravity = -9.81f;
-    public float m_Mass = 81.0f;
 
+    [Range(0.1f, 100.0f)]
+    public float m_SprintSpeed = 8.0f;
+
+    [Range(0.1f, 0.9f)]
+    public float m_CrouchModifier = 0.5f;
+
+    [Range(0.1f, 30.0f)]
+    public float m_JumpSpeed = 3.5f;
+
+    [Header("Camera Settings")]
+    [Range(0.01f, 3.0f)]
     public float m_CameraPanOutSpeed = 0.08f;
+
+    [Range(0.01f, 3.0f)]
     public float m_CameraPanInSpeed = 0.02f;
+
+    [Range(0.1f, 30.0f)]
     public float m_WalkingBobSpeed = 12.0f;
+
+    [Range(0.1f, 30.0f)]
     public float m_SprintingBobSpeed = 25.0f;
+
+    [Range(0.01f, 3.0f)]
     public float m_BobbingAmount = 0.03f;
+
+    private const float c_Gravity = -9.81f;
 
     PlayerInput m_PlayerInput;
 
@@ -42,6 +64,7 @@ public class PlayerController : MonoBehaviour
     private float m_DefaultPosY;
     private float m_Timer;
 
+    // Fire when the script is initially loaded and always runs first
     private void Awake()
     {
         m_CurrentMovementState = PlayerMovementState.Walk;
@@ -57,22 +80,26 @@ public class PlayerController : MonoBehaviour
         m_Timer = 0.0f;
     }
 
+    // Fire when the script is enabled
     private void OnEnable()
     {
         m_PlayerInput.Enable();
     }
 
+    // Fire when the script is disabled
     private void OnDisable()
     {
         m_PlayerInput.Disable();
     }
 
+    // Fire when the script is initially started
     private void Start()
     {
         m_DefaultCameraFov = m_Camera.fieldOfView;
         m_DefaultPosY = m_Camera.transform.localPosition.y;
     }
 
+    // Fire every frame
     private void Update()
     {
         m_Grounded = Physics.CheckSphere(m_GroundCheck.position, m_GroundDist, m_GroundMask);
@@ -87,11 +114,12 @@ public class PlayerController : MonoBehaviour
         if ( !m_Grounded && m_PlayerVelocity.y < 0.0f && m_CurrentMovementState == PlayerMovementState.Sprint )
             m_CurrentMovementState = PlayerMovementState.Walk;
 
-        m_PlayerVelocity.y += m_Gravity * Time.deltaTime;
+        m_PlayerVelocity.y += c_Gravity * Time.deltaTime;
 
         m_CharacterController.Move(m_PlayerVelocity * Time.deltaTime);
     }
 
+    // Handles movement updates from the input system
     private void UpdateMovement(Vector2 p_Data)
     {
         Vector3 m_Movement = (transform.right * p_Data.x + transform.forward * p_Data.y) * GetMovementSpeed();
@@ -102,7 +130,8 @@ public class PlayerController : MonoBehaviour
         if ( p_Data.y != 1 && m_CurrentMovementState == PlayerMovementState.Sprint )
             m_CurrentMovementState = PlayerMovementState.Walk;
     }
-
+    
+    // Handles updating the camera field of view for the player depending on their movement state
     private void UpdateFieldOfView()
     {
         if ( m_CurrentMovementState == PlayerMovementState.Sprint )
@@ -113,6 +142,7 @@ public class PlayerController : MonoBehaviour
             m_Camera.fieldOfView = Mathf.Lerp(m_Camera.fieldOfView, (m_DefaultCameraFov - 5.0f), m_CameraPanOutSpeed);
     }
 
+    // Handles updating view bobbing for the player depending on their movement state
     private void UpdateViewBobbing()
     {
         if (Mathf.Abs(m_PlayerVelocity.x) > 0.1f || Mathf.Abs(m_PlayerVelocity.z) > 0.1f)
@@ -128,6 +158,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    // Handles jump requests from the input system
     private void OnJumpChanged(InputAction.CallbackContext p_Ctx)
     {
         if ( !m_Grounded )
@@ -136,6 +167,7 @@ public class PlayerController : MonoBehaviour
         m_PlayerVelocity.y = m_JumpSpeed;
     }
 
+    // Handles sprint requests from the input system
     private void OnSprintChanged(InputAction.CallbackContext p_Ctx)
     {
         if ( !m_Grounded )
@@ -145,17 +177,12 @@ public class PlayerController : MonoBehaviour
         bool m_RequestingSprint = (m_Value == 1);
 
         if ( m_RequestingSprint && m_CurrentMovementState != PlayerMovementState.Sprint )
-        {
             m_CurrentMovementState = PlayerMovementState.Sprint;
-            return;
-        }
-
-        if ( !m_RequestingSprint && m_CurrentMovementState == PlayerMovementState.Sprint )
-        {
+        else if ( !m_RequestingSprint && m_CurrentMovementState == PlayerMovementState.Sprint )
             m_CurrentMovementState = PlayerMovementState.Walk;
-        }
     }
 
+    // Handles crouch requests from the input system
     private void OnCrouchChanged(InputAction.CallbackContext p_Ctx)
     {
         if ( !m_Grounded )
@@ -175,6 +202,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    // Returns the movement speed for the player based on their current movement state
     private float GetMovementSpeed()
     {
         switch ( m_CurrentMovementState )
@@ -190,6 +218,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    // Returns the view bobbing speed for the player based on their current movement state
     private float GetViewBobbingSpeed()
     {
         switch ( m_CurrentMovementState )
