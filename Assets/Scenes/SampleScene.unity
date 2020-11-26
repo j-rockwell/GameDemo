@@ -8750,9 +8750,7 @@ PlayableDirector:
   m_WrapMode: 2
   m_DirectorUpdateMode: 1
   m_InitialTime: 0
-  m_SceneBindings:
-  - key: {fileID: 7206989897909045908, guid: a68e4ad89ad65c04981239cc0044a707, type: 2}
-    value: {fileID: 0}
+  m_SceneBindings: []
   m_ExposedReferences:
     m_References:
     - 13ae5fdcf3d2cea47a95f124ba7b0ceb: {fileID: 1914615555}
@@ -14938,7 +14936,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2782458481585470134, guid: 8e1c9195acf59394aaf785cdb5fe8c84, type: 3}
       propertyPath: m_Layer
-      value: 10
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2782458481585470134, guid: 8e1c9195acf59394aaf785cdb5fe8c84, type: 3}
       propertyPath: m_IsActive
@@ -14950,7 +14948,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3643281215179823450, guid: 8e1c9195acf59394aaf785cdb5fe8c84, type: 3}
       propertyPath: m_Layer
-      value: 10
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3643281215179823450, guid: 8e1c9195acf59394aaf785cdb5fe8c84, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -14962,7 +14960,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6245405139126777595, guid: 8e1c9195acf59394aaf785cdb5fe8c84, type: 3}
       propertyPath: m_Layer
-      value: 10
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6245405139126777595, guid: 8e1c9195acf59394aaf785cdb5fe8c84, type: 3}
       propertyPath: m_IsActive
@@ -15854,7 +15852,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 738646681595172699, guid: 573ac53c334415945bf239de2c2f0511, type: 3}
       propertyPath: field of view
-      value: 41.90629
+      value: 57.346294
       objectReference: {fileID: 0}
     - target: {fileID: 738646681744756154, guid: 573ac53c334415945bf239de2c2f0511, type: 3}
       propertyPath: m_Name
@@ -15863,6 +15861,14 @@ PrefabInstance:
     - target: {fileID: 738646681744756154, guid: 573ac53c334415945bf239de2c2f0511, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 738646681744756155, guid: 573ac53c334415945bf239de2c2f0511, type: 3}
+      propertyPath: m_SlopeLimit
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 738646681744756155, guid: 573ac53c334415945bf239de2c2f0511, type: 3}
+      propertyPath: m_StepOffset
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 738646681744756156, guid: 573ac53c334415945bf239de2c2f0511, type: 3}
       propertyPath: m_RootOrder
@@ -15918,11 +15924,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4133447375234413951, guid: 573ac53c334415945bf239de2c2f0511, type: 3}
       propertyPath: m_JumpSpeed
-      value: 20
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4133447375234413951, guid: 573ac53c334415945bf239de2c2f0511, type: 3}
+      propertyPath: m_AirFriction
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4133447375234413951, guid: 573ac53c334415945bf239de2c2f0511, type: 3}
+      propertyPath: m_BobbingAmount
+      value: 0.03
+      objectReference: {fileID: 0}
+    - target: {fileID: 4133447375234413951, guid: 573ac53c334415945bf239de2c2f0511, type: 3}
+      propertyPath: m_WalkingBobSpeed
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 4133447375234413951, guid: 573ac53c334415945bf239de2c2f0511, type: 3}
+      propertyPath: m_CameraPanOutSpeed
+      value: 0.01
       objectReference: {fileID: 0}
     - target: {fileID: 4133447375234413951, guid: 573ac53c334415945bf239de2c2f0511, type: 3}
       propertyPath: m_GroundMask.m_Bits
       value: 1024
+      objectReference: {fileID: 0}
+    - target: {fileID: 4133447375234413951, guid: 573ac53c334415945bf239de2c2f0511, type: 3}
+      propertyPath: m_SprintingBobSpeed
+      value: 25
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 738646681744756157, guid: 573ac53c334415945bf239de2c2f0511, type: 3}
